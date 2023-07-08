@@ -1,0 +1,3 @@
+﻿  FileUtility.cpp
+C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\Dependencies\FileUtilis\src\FileUtility.cpp(29): warning C4715: 'FileUtil::ParseFile': not all control paths return a value
+  FileUtilis.vcxproj -> C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\x64\Debug\FileUtilis.lib
