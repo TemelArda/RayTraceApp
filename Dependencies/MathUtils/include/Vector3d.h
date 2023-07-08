@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 namespace MathUtils 
 {
@@ -34,6 +35,8 @@ public:
 	static double DotProduct(const Vector3d& v1, const Vector3d& v2);
 
 	static Vector3d CrossProduct(const Vector3d& v1, const Vector3d& v2); 
+
+	static Vector3d FromString(const std::string& s);
 
 public:
      double x;

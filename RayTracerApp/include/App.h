@@ -3,7 +3,7 @@
 #include <string>
 #include <unordered_map>
 #include "Vector3d.h"
-#include "Sphere.h"
+#include "Scene.h"
 #include "Renderer.h"
 #include "Camera.h"
 
@@ -41,10 +41,12 @@ private :
    std::unique_ptr<Camera> mCamera;
 
 	std::unique_ptr<Renderer> mRenderer;
+
+	std::unique_ptr<Scene> mScene;
    
-   uint32_t mWidth;
+   uint32_t mWidth = 100;
    
-   uint32_t mHeight;
+   uint32_t mHeight = 100;
 
    uint16_t mNumberSpheres = 0;
 

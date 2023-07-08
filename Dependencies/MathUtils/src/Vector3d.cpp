@@ -4,8 +4,6 @@
 namespace MathUtils 
 {
 
-
-
 Vector3d::Vector3d() : 
 	x(0.0),
 	y(0.0), 
@@ -81,6 +79,21 @@ Vector3d Vector3d::CrossProduct(const Vector3d& v1, const Vector3d& v2)
 	result.z = v1.x * v2.y - v1.y * v2.x;
 
 	return result;
+}
+
+Vector3d Vector3d::FromString(const std::string& s)
+{
+	//Build a new Vector3d from a string in the format "x y z"
+	//Example: "1 1 1"
+	std::string::size_type sz;
+	std::string::size_type sz2;
+	std::string::size_type sz3;
+
+	double x = std::stod(s, &sz);
+	double y = std::stod(s.substr(sz), &sz2);
+	double z = std::stod(s.substr(sz + sz2), &sz3);
+
+	return Vector3d(x, y, z);
 }
 
 double Vector3d::GetMagnitude() const 

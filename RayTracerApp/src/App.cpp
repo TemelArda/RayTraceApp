@@ -38,7 +38,10 @@ void App::SetHeight(const uint32_t height)
 
 const bool App::SetUpScene(const SceneDefininition& scene) 
 {
-   if (!mCamera)
+	if (!mScene)
+		mScene = std::make_unique<Scene>();
+   
+	if (!mCamera)
       mCamera = std::make_unique<Camera>();
    
    auto it = scene.find("NEAR");
@@ -100,14 +103,25 @@ const bool App::SetUpScene(const SceneDefininition& scene)
    if (it != scene.end()) 
    {
       SetWidth(stoi(it->second.substr(0, it->second.find(" "))));
-     SetHeight(
-         stoi(it->second.substr(it->second.find(" "), it->second.length())));
+		SetHeight(stoi(it->second.substr(it->second.find(" "), it->second.length())));
    } 
    else 
    {
      std::cout << "Error when retriving resolution" << std::endl;
      return false;
    }
+
+	it = scene.find("BACK");
+	if (it != scene.end())
+	{
+		auto skyColor = MathUtils::Vector3d::FromString(it->second);
+		mScene->SetSkyColor(skyColor);
+	}
+	else
+	{
+		std::cout << "Error when retriving Sky Color" << std::endl;
+		return false;
+	}
 
    auto range = scene.equal_range("SPHERE");
    if (range.first != scene.end())
@@ -152,7 +166,7 @@ void App::InitilizeRenderer()
 
 const uint8_t* App::Draw() const
 {
-	mRenderer->Render(mCamera.get(), mWidth, mHeight); 
+	mRenderer->Render(mCamera.get(), mScene.get(), mWidth, mHeight); 
 	return mRenderer->GetImageData();
 }
 
@@ -167,18 +181,17 @@ void App::SetUpSphere(const std::string& sphere)
       v.push_back(tmp);
    Sphere newSphere;
    
-   newSphere.name = v[0];
+   newSphere.Name = v[0];
    
    MathUtils::Vector3d pos{stod(v[1]), stod(v[2]), stod(v[3])};
-   newSphere.position = pos;
-   MathUtils::Vector3d scale{stod(v[4]), stod(v[5]), stod(v[6])};
-   newSphere.scale = scale;
-   MathUtils::Vector3d col{stod(v[7]), stod(v[8]), stod(v[9])};
-   newSphere.color = col;   
-   newSphere.specularComponent = stod(v[14]);
+   newSphere.Position = pos;
 
-   mSpheres.push_back(newSphere);
-   mNumberSpheres++;
+   newSphere.Radius = stod(v[4]);
+   MathUtils::Vector3d col{stod(v[5]), stod(v[6]), stod(v[7])};
+   newSphere.Albedo = col;   
+   newSphere.SpecularComponent = stod(v[12]);
+	
+	mScene->AddSphere(newSphere);
 }
 
 void App::SetUpLight(const std::string& light) 
@@ -194,15 +207,12 @@ void App::SetUpLight(const std::string& light)
 
    LightSource newLight;
    
-   newLight.name = v[0];
+   newLight.Name = v[0];
    MathUtils::Vector3d pos{stod(v[1]), stod(v[2]), stod(v[3])};
-   newLight.position = pos;
+   newLight.Position = pos;
    MathUtils::Vector3d col{stod(v[4]), stod(v[5]), stod(v[6])};
-   newLight.color = col;
-   
-   mLights.push_back(newLight);
-   mNumberLights++;
-}
+   newLight.Color = col;
 
- 
+	mScene->AddLightSource(newLight);
+}
 }  // namespace RayTracerApp

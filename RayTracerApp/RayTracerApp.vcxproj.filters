@@ -30,6 +30,9 @@
     <ClCompile Include="src\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\ppm.h">
@@ -38,7 +41,7 @@
     <ClInclude Include="include\App.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Sphere.h">
+    <ClInclude Include="include\Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Renderer.h">
