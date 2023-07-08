@@ -18,6 +18,9 @@
     <ClInclude Include="include\Vector3d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\MathUtility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Vector3d.cpp">

@@ -3,11 +3,14 @@
 
 namespace MathUtils 
 {
+
+
+
 Vector3d::Vector3d() : 
 	x(0.0),
 	y(0.0), 
 	z(0.0) 
-{}
+	{}
 
 Vector3d::Vector3d(double value) :
 	x(value),

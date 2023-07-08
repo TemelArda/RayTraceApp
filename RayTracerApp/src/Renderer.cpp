@@ -1,5 +1,6 @@
 #include "../include/Renderer.h"
 #include "Vector3d.h"
+#include "MathUtility.h"
 #include <iostream>
 
 namespace RayTracerApp
@@ -20,9 +21,9 @@ void Renderer::Render(const Camera* camera, uint32_t width, uint32_t height)
 	Ray ray;
 	ray.Origin = camera->GetPosition();
 	int k = 0;
-	for (size_t y = height - 1; y >= 0 && y < height ; y--) 
+	for (size_t y = 0; y >= 0 && y < height ; ++y) 
 	{
-		for (size_t x = 0; x < width; x++) 
+		for (size_t x = width - 1; x >= 0 && x < width; --x)
 		{
 			ray.Direction = camera->GetRayDirections()[x + y * width];
 			auto pixelColor = this->TraceRay(ray);
@@ -61,10 +62,21 @@ const MathUtils::Vector3d& Renderer::TraceRay(const Ray& ray) const
 	//Calculate the two solutions
 	float t1 = (-b + sqrt(discriminant)) / (2.0 * a);
 	float t2 = (-b - sqrt(discriminant)) / (2.0 * a);
-	
 	//Get the closest solution
 	float t = t1 < t2 ? t1 : t2;
+	//Calculate the intersection point
+	MathUtils::Vector3d hitPoint = ray.GetPointAt(t);
+	//Calculate the normal at the intersection point
+	MathUtils::Vector3d normal = hitPoint;
+	normal.Normilize();
 
-	return MathUtils::Vector3d{red, green, blue} * 255.0;
+	//Light direction 3d vector all values are -1.0
+	MathUtils::Vector3d lightDir(-1.0);
+	lightDir.Normilize();
+	const auto dot = MathUtils::Max(MathUtils::Vector3d::DotProduct(normal,  lightDir * -1), 0);
+	
+	auto sphere_color = normal * 0.5 + 0.5;
+	sphere_color *= dot;
+	return sphere_color * 255.0;
 }
 }// namespace RaytracerApp

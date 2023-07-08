@@ -1,6 +1,8 @@
 #pragma once
+
 namespace MathUtils 
 {
+
 class Vector3d {
 public:
    Vector3d();

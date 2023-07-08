@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\MathUtility.h" />
     <ClInclude Include="include\Vector3d.h" />
   </ItemGroup>
   <ItemGroup>
