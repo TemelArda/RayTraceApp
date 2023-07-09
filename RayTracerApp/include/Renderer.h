@@ -21,9 +21,19 @@ public:
 	[[nodiscard]] const uint8_t* GetImageData() const;
 
 private:
-	const MathUtils::Vector3d& TraceRay(const Ray& ray, const Scene* scene) const;
-	
 	uint8_t *mImageData;
+	
+	Scene* scene;
+
+private:
+	[[nodiscard]] const MathUtils::Vector3d& PerPixel(const Camera* camera, const Scene* scene, uint32_t rayIndex) const;
+
+	[[nodiscard]] const HitInfo& TraceRay(const Ray& ray, const Scene* scene) const;
+
+	const HitInfo& Missed(const Ray& ray) const;
+
+	const HitInfo& OnHit(const Ray& ray, const Scene* scene, const double HitDistance, const int ObjectIndex) const;
+
 };
 
 }  // namespace RaytracerApp

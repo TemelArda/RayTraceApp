@@ -38,11 +38,13 @@ public:
 
 	static Vector3d FromString(const std::string& s);
 
+	static Vector3d Reflect(const Vector3d& v1, const Vector3d& v2);
 public:
      double x;
-     double y;
-     double z;
 
+     double y;
+     
+	  double z;
 private:
    
 };

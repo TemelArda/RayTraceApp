@@ -111,5 +111,11 @@ void Vector3d::Normilize()
 	this->z /= magnitude;
 }
 
+Vector3d Vector3d::Reflect(const Vector3d& incoming, const Vector3d& surfaceNormal)
+{
+	// result = I - 2.0 * dot(N, I) * N 
+	Vector3d result = (incoming - 2.0 * Vector3d::DotProduct(incoming, surfaceNormal));
+	return Vector3d::CrossProduct(result, surfaceNormal);
+}
 
 }// namespace MathUtils 
