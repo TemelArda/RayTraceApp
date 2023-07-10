@@ -2,8 +2,7 @@ c:\dev\cpp\projects\raytracerupdated\raytraceapp\x64\debug\mathutils.pdb
 c:\dev\cpp\projects\raytracerupdated\raytraceapp\x64\debug\mathutils.idb
 c:\dev\cpp\projects\raytracerupdated\raytraceapp\dependencies\mathutils\x64\debug\vector3d.obj
 c:\dev\cpp\projects\raytracerupdated\raytraceapp\x64\debug\mathutils.lib
-c:\dev\cpp\projects\raytracerupdated\raytraceapp\dependencies\mathutils\x64\debug\vc143.idb
-c:\dev\cpp\projects\raytracerupdated\raytraceapp\dependencies\mathutils\x64\debug\vc143.pdb
+c:\dev\cpp\projects\raytracerupdated\raytraceapp\dependencies\mathutils\x64\debug\vector3d.obj.enc
 c:\dev\cpp\projects\raytracerupdated\raytraceapp\dependencies\mathutils\x64\debug\mathutils.tlog\cl.command.1.tlog
 c:\dev\cpp\projects\raytracerupdated\raytraceapp\dependencies\mathutils\x64\debug\mathutils.tlog\cl.items.tlog
 c:\dev\cpp\projects\raytracerupdated\raytraceapp\dependencies\mathutils\x64\debug\mathutils.tlog\cl.read.1.tlog
@@ -11,11 +10,3 @@ c:\dev\cpp\projects\raytracerupdated\raytraceapp\dependencies\mathutils\x64\debu
 c:\dev\cpp\projects\raytracerupdated\raytraceapp\dependencies\mathutils\x64\debug\mathutils.tlog\lib-link.read.1.tlog
 c:\dev\cpp\projects\raytracerupdated\raytraceapp\dependencies\mathutils\x64\debug\mathutils.tlog\lib-link.write.1.tlog
 c:\dev\cpp\projects\raytracerupdated\raytraceapp\dependencies\mathutils\x64\debug\mathutils.tlog\lib.command.1.tlog
-c:\dev\cpp\projects\raytracerupdated\raytraceapp\dependencies\mathutils\x64\debug\mathutils.tlog\link-cvtres.read.1.tlog
-c:\dev\cpp\projects\raytracerupdated\raytraceapp\dependencies\mathutils\x64\debug\mathutils.tlog\link-cvtres.write.1.tlog
-c:\dev\cpp\projects\raytracerupdated\raytraceapp\dependencies\mathutils\x64\debug\mathutils.tlog\link-rc.read.1.tlog
-c:\dev\cpp\projects\raytracerupdated\raytraceapp\dependencies\mathutils\x64\debug\mathutils.tlog\link-rc.write.1.tlog
-c:\dev\cpp\projects\raytracerupdated\raytraceapp\dependencies\mathutils\x64\debug\mathutils.tlog\link.command.1.tlog
-c:\dev\cpp\projects\raytracerupdated\raytraceapp\dependencies\mathutils\x64\debug\mathutils.tlog\link.read.1.tlog
-c:\dev\cpp\projects\raytracerupdated\raytraceapp\dependencies\mathutils\x64\debug\mathutils.tlog\link.read.2.tlog
-c:\dev\cpp\projects\raytracerupdated\raytraceapp\dependencies\mathutils\x64\debug\mathutils.tlog\link.write.1.tlog

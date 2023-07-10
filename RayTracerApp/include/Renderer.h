@@ -20,11 +20,19 @@ public:
 
 	[[nodiscard]] const uint8_t* GetImageData() const;
 
+	void SetNumSamples(uint32_t numSamples);
 private:
 	uint8_t *mImageData;
 	
-	Scene* scene;
+	MathUtils::Vector3d *mAccumulationBuffer;
 
+	uint32_t mFrameIndex = 1;
+
+	uint32_t mSamples = 1;
+
+	std::vector<uint32_t> mVerticalIterator;
+
+	std::vector<uint32_t> mHorizontalIterator;
 private:
 	[[nodiscard]] const MathUtils::Vector3d& PerPixel(const Camera* camera, const Scene* scene, uint32_t rayIndex) const;
 

@@ -28,6 +28,10 @@ public:
 
 	void operator *=(const double other);
 
+	Vector3d operator *(const Vector3d& other) const;
+
+	void operator *=(const Vector3d& other);
+
 	double GetMagnitude() const;
 
 	void Normilize(); 

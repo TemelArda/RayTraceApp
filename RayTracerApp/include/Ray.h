@@ -22,6 +22,7 @@ struct Ray
 	MathUtils::Vector3d Origin{0};
 	MathUtils::Vector3d Direction{0, 0, 1};
 };
+
 struct HitInfo
 {
 	MathUtils::Vector3d HitPoint {0};
@@ -31,6 +32,8 @@ struct HitInfo
 	float Distance {0.0};
 
 	int ObjectIndex {-1};
+
+	int MaterialIndex {-1};
 };
 
 }// namespace RayTracerApp

@@ -43,8 +43,21 @@ const bool App::SetUpScene(const SceneDefininition& scene)
    
 	if (!mCamera)
       mCamera = std::make_unique<Camera>();
-   
-   auto it = scene.find("NEAR");
+	if(!mRenderer)
+		mRenderer = std::make_unique<Renderer>();
+
+	auto it = scene.find("SAMPLES");
+	if (it != scene.end())
+	{
+		mRenderer->SetNumSamples(stoi(it->second));
+	}
+	else
+	{
+		std::cout << "Error when retriving TOP of mCamera" << std::endl;
+		return false;
+	}
+
+   it = scene.find("NEAR");
    if (it != scene.end()) 
    {
 		mCamera->SetNear(stoi(it->second));
@@ -111,7 +124,7 @@ const bool App::SetUpScene(const SceneDefininition& scene)
      return false;
    }
 
-	it = scene.find("BACK");
+	it = scene.find("AMBIENT");
 	if (it != scene.end())
 	{
 		auto skyColor = MathUtils::Vector3d::FromString(it->second);
@@ -123,7 +136,21 @@ const bool App::SetUpScene(const SceneDefininition& scene)
 		return false;
 	}
 
-   auto range = scene.equal_range("SPHERE");
+	auto range = scene.equal_range("MATERIAL");
+	if (range.first != scene.end())
+	{
+		for (auto it = range.first; it != range.second; ++it)
+		{
+			SetUpMaterial(it->second);
+		}
+	}
+	else
+	{
+		std::cout << "Error when retriving MATERIAL" << std::endl;
+		return false;
+	}
+
+   range = scene.equal_range("SPHERE");
    if (range.first != scene.end())
    {
       for (auto it = range.first; it != range.second; ++it) 
@@ -179,18 +206,15 @@ void App::SetUpSphere(const std::string& sphere)
 
    while (getline(ss, tmp, ' ')) 
       v.push_back(tmp);
+
    Sphere newSphere;
    
    newSphere.Name = v[0];
    
    MathUtils::Vector3d pos{stod(v[1]), stod(v[2]), stod(v[3])};
    newSphere.Position = pos;
-
    newSphere.Radius = stod(v[4]);
-   MathUtils::Vector3d col{stod(v[5]), stod(v[6]), stod(v[7])};
-   newSphere.Albedo = col;   
-   newSphere.SpecularComponent = stod(v[12]);
-	
+	newSphere.MaterialIndex = mScene->GetMaterialIndex(v[5]);
 	mScene->AddSphere(newSphere);
 }
 
@@ -214,5 +238,25 @@ void App::SetUpLight(const std::string& light)
    newLight.Color = col;
 
 	mScene->AddLightSource(newLight);
+}
+
+void App::SetUpMaterial(const std::string& material)
+{
+	std::cout << material << std::endl;
+	std::stringstream ss(material);
+	std::vector<std::string> v;
+	std::string tmp;
+
+	while (getline(ss, tmp, ' '))
+		v.push_back(tmp);
+
+	Material newMaterial;
+	newMaterial.name = v[0];
+	MathUtils::Vector3d col{stod(v[1]), stod(v[2]), stod(v[3])};
+	newMaterial.Albedo = col;
+	newMaterial.Roughness = stod(v[4]);
+	newMaterial.Metallic = stod(v[5]);
+	newMaterial.Specular = stod(v[6]);
+	mScene->AddMaterial(newMaterial);
 }
 }  // namespace RayTracerApp

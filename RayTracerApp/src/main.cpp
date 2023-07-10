@@ -15,16 +15,13 @@ int main(int argc, char* argv[])
      std::cin >> end;
      return -1;
    }
-   
    std::string fileName = argv[1];
    const auto sceneDefinition = FileUtil::ParseFile(fileName);
    auto scene = RayTracerApp::App::GetInstance().SetUpScene(sceneDefinition);
+	RayTracerApp::App::GetInstance().InitilizeRenderer();
    
-
-   if (scene) 
+	if (scene) 
    {
-		RayTracerApp::App::GetInstance().InitilizeRenderer();
-
 		auto  it = sceneDefinition.find("OUTPUT"); 
 		char OutFileName [20];
 		if (it != sceneDefinition.end()) 

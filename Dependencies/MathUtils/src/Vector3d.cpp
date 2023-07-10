@@ -65,6 +65,18 @@ void Vector3d::operator*=(const double other)
   this->z *= other;
 }
 
+Vector3d Vector3d::operator*(const Vector3d& other) const
+{
+	return Vector3d(x * other.x, y * other.y, z * other.z);
+}
+
+void Vector3d::operator*=(const Vector3d& other)
+{
+	this->x *= other.x;
+	this->y *= other.y;
+	this->z *= other.z;
+}
+
 double Vector3d::DotProduct(const Vector3d& v1, const Vector3d& v2) 
 {
 	return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
@@ -113,9 +125,9 @@ void Vector3d::Normilize()
 
 Vector3d Vector3d::Reflect(const Vector3d& incoming, const Vector3d& surfaceNormal)
 {
-	// result = I - 2.0 * dot(N, I) * N 
+	//-2.0f * glm::dot(hit.normal, r.direction) * hit.normal + r.direction;
+	// result = I - 2.0 * dot(N, I) * N
 	Vector3d result = (incoming - 2.0 * Vector3d::DotProduct(incoming, surfaceNormal));
-	return Vector3d::CrossProduct(result, surfaceNormal);
+	return result * surfaceNormal;
 }
-
 }// namespace MathUtils 

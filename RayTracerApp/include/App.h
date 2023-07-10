@@ -59,6 +59,8 @@ private :
    void SetUpSphere(const std::string& sphere);
 
    void SetUpLight(const std::string& light);
+
+	void SetUpMaterial(const std::string& material);
 };
 
 } // namespace RayTracer
