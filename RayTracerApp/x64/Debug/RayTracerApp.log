@@ -1,37 +1,36 @@
-﻿  App.cpp
+﻿  Renderer.cpp
 C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\include\Scene.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\App.cpp(63,24): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
-C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\App.cpp(216,27): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\App.cpp(257,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\App.cpp(258,29): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\App.cpp(259,29): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  Renderer.cpp
-C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\include\Scene.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(28,28): warning C4267: '=': conversion from 'size_t' to '_Ty', possible loss of data
+C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(30,28): warning C4267: '=': conversion from 'size_t' to '_Ty', possible loss of data
           with
           [
               _Ty=uint32_t
           ]
-C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(32,41): warning C4267: '=': conversion from 'size_t' to '_Ty', possible loss of data
+C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(34,41): warning C4267: '=': conversion from 'size_t' to '_Ty', possible loss of data
           with
           [
               _Ty=uint32_t
           ]
-C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(51,18): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(52,11): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(59,34): warning C4244: '=': conversion from 'double' to 'uint8_t', possible loss of data
-C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(60,38): warning C4244: '=': conversion from 'double' to 'uint8_t', possible loss of data
-C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(61,38): warning C4244: '=': conversion from 'double' to 'uint8_t', possible loss of data
-C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(94,11): warning C4267: '+=': conversion from 'size_t' to 'uint32_t', possible loss of data
-C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(132,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(133,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(134,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(137,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(144,12): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(172,36): warning C4244: 'argument': conversion from 'const double' to 'float', possible loss of data
-C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(175,21): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
-  Generating Code...
-C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(115): warning C4172: returning address of local variable or temporary: color
-C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(179): warning C4172: returning address of local variable or temporary: hitInfo
-C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(164): warning C4172: returning address of local variable or temporary: hitInfo
+C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(53,18): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(54,11): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(61,34): warning C4244: '=': conversion from 'double' to 'uint8_t', possible loss of data
+C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(62,38): warning C4244: '=': conversion from 'double' to 'uint8_t', possible loss of data
+C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(63,38): warning C4244: '=': conversion from 'double' to 'uint8_t', possible loss of data
+C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(98,11): warning C4267: '+=': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(121,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(121,19): warning C4244: 'argument': conversion from 'const double' to 'float', possible loss of data
+C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(156,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(157,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(158,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(161,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(168,12): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(196,36): warning C4244: 'argument': conversion from 'const double' to 'float', possible loss of data
+C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(199,21): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
+C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(217,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(218,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(219,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(220,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(224,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(188): warning C4172: returning address of local variable or temporary: hitInfo
+C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(203): warning C4172: returning address of local variable or temporary: hitInfo
+C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\RayTracerApp\src\Renderer.cpp(139): warning C4172: returning address of local variable or temporary: color
   RayTracerApp.vcxproj -> C:\DEV\CPP\Projects\RayTracerUpdated\RayTraceApp\x64\Debug\RayTracerApp.exe

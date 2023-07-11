@@ -38,6 +38,8 @@ private:
 
 	[[nodiscard]] const HitInfo& TraceRay(const Ray& ray, const Scene* scene) const;
 
+	[[nodiscard]] const bool IsInShadow(const Ray& toLight, const HitInfo& hitInfo, const Scene* scene) const;
+
 	const HitInfo& Missed(const Ray& ray) const;
 
 	const HitInfo& OnHit(const Ray& ray, const Scene* scene, const double HitDistance, const int ObjectIndex) const;

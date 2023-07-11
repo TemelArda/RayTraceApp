@@ -7,6 +7,8 @@
 
 namespace RayTracerApp
 {
+constexpr double POINT_OFFSET = 0.0001;
+
 Renderer::~Renderer() 
 {
 	delete [] mImageData;
@@ -85,31 +87,53 @@ const MathUtils::Vector3d& Renderer::PerPixel(const Camera* camera, const Scene*
 	ray.Origin = camera->GetPosition();
 	ray.Direction = camera->GetRayDirections()[rayIndex];
 	
-	int rayBounces = 3;
+	int rayBounces = 4;
 	MathUtils::Vector3d color{0};
-	float multiplier = 1;
-	uint32_t seed = rayIndex;
+	MathUtils::Vector3d contribution{1};
+	
+
+	uint32_t seed = rayIndex * mFrameIndex;
 	for (size_t i = 0; i < rayBounces; ++i)
 	{
 		seed += i;
 		HitInfo payload = TraceRay(ray, scene);
 		if (payload.Distance < 0)
 		{
-			color += scene->GetSkyColor() * multiplier;
+			color += scene->GetSkyColor() * contribution;
 			break;
 		}
-		auto lightDirection =  payload.HitPoint - scene->GetLightSources()[0].Position;
-		lightDirection.Normilize();
-		const double dot = MathUtils::Max(0, 
-			MathUtils::Vector3d::DotProduct(payload.Normal, lightDirection * -1));
 		const auto mat = scene->GetMaterials()[payload.MaterialIndex];
-		color += mat.Albedo * dot;
-		color *= multiplier;
-		multiplier *= 0.5;
+		for(size_t i = 0; i < scene->GetNumberOfLightSources(); ++i)
+		{
+			LightSource light = scene->GetLightSources()[i];
+			Ray rayToLight;
+			rayToLight.Direction = light.Position - payload.HitPoint;
+			rayToLight.Origin = payload.HitPoint + rayToLight.Direction * POINT_OFFSET;
+			if (IsInShadow(rayToLight, payload, scene))
+			{
+				continue;
+			}
+			rayToLight.Direction.Normilize();
+			MathUtils::Vector3d V = payload.HitPoint * -1;
+			MathUtils::Vector3d R = MathUtils::Vector3d::Reflect(rayToLight.Direction * -1.0f, payload.Normal);
+			const double RdotV = MathUtils::Max(0, MathUtils::Vector3d::DotProduct(V, R));
+			const double NdotL = MathUtils::Max(0, MathUtils::Vector3d::DotProduct(rayToLight.Direction, payload.Normal));
+			float s = powf(RdotV, (int)mat.Specular);
+
+			MathUtils::Vector3d diffuse = light.Color * NdotL * mat.Albedo;
+			//MathUtils::Vector3d specular = light.Color * s;
+			color += diffuse;//+ specular;
+		}
+		//auto lightDirection =  payload.HitPoint - scene->GetLightSources()[0].Position;
+		//lightDirection.Normilize();
+		//const double dot = MathUtils::Max(0, 
+		//	MathUtils::Vector3d::DotProduct(payload.Normal, lightDirection * -1));
+		//color += mat.Albedo * dot;
+		color *= contribution;
 
 		//color = payload.Normal * .5 + .5;
-		ray.Origin = payload.HitPoint + payload.Normal * 0.0001;
-		ray.Direction = (payload.Normal +  MathUtils::RandomInUnitSphere(seed));
+		ray.Origin = payload.HitPoint + payload.Normal * POINT_OFFSET;
+		ray.Direction = (payload.Normal + mat.Roughness * MathUtils::RandomFloatInRange(0.5, -0.5, seed));
 		ray.Direction.Normilize();
 	}
 	return color;
@@ -178,4 +202,34 @@ const HitInfo& Renderer::OnHit(const Ray& ray, const Scene* scene, const double 
 
 	return hitInfo;
 }
+
+
+const bool Renderer::IsInShadow(const Ray& toLight, const HitInfo& hitInfo, const Scene* scene) const
+{
+	for (size_t i = 0; i < scene->GetNumberOfSpheres(); ++i)
+	{
+		if (hitInfo.ObjectIndex == i)
+		{
+			continue;
+		}
+		Sphere sphere  = scene->GetSpheres()[i];
+		MathUtils::Vector3d origin = toLight.Origin - sphere.Position;
+		float a = MathUtils::Vector3d::DotProduct(toLight.Direction, toLight.Direction);
+		float b = 2 * MathUtils::Vector3d::DotProduct(toLight.Direction, origin);
+		float c = MathUtils::Vector3d::DotProduct(origin, origin) - sphere.Radius * sphere.Radius;
+		float discriminant = b * b - 4.0 * a * c;
+		if (discriminant > 0)
+		{
+			//float t2 = (-b + sqrt(discriminant)) / (2.0 * a);
+			float t1 = (-b - sqrt(discriminant)) / (2.0 * a);
+			if (t1 > 0 && t1 < 1)
+			{
+				return true;
+			}
+		}
+
+	}
+	return false;
+}
+
 }// namespace RaytracerApp

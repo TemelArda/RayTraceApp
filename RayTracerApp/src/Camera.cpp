@@ -5,7 +5,7 @@ namespace RayTracerApp{
 Camera::Camera() : 
 	mForwardDirection{0, 0, -1}, 
 	mNear(1), 
-	mPosition(0, 0, 6) {}
+	mPosition(0, 0, 5) {}
 
 void Camera::SetNear(const float near) 
 {
