@@ -2,7 +2,7 @@
 #include <fstream>
 
 
-namespace FileUtil
+namespace FileUtility
 {
 
 const std::unordered_multimap<std::string, std::string>  ParseFile(const std::string& fileName) 
@@ -27,5 +27,5 @@ const std::unordered_multimap<std::string, std::string>  ParseFile(const std::st
       return fileContents;
    }
 }
-}// namespace FileUtil
+}// namespace FileUtility
 

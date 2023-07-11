@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
      return -1;
    }
    std::string fileName = argv[1];
-   const auto sceneDefinition = FileUtil::ParseFile(fileName);
+   const RayTracerApp::SceneDefininition sceneDefinition = FileUtility::ParseFile(fileName);
    auto scene = RayTracerApp::App::GetInstance().SetUpScene(sceneDefinition);
 	RayTracerApp::App::GetInstance().InitilizeRenderer();
    

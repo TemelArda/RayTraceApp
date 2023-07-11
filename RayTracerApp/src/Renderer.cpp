@@ -42,13 +42,13 @@ void Renderer::Render(const Camera* camera, const Scene* scene, uint32_t width, 
 	{
 		if(mFrameIndex == 1)
 			memset(mAccumulationBuffer, 0, width * height * sizeof(MathUtils::Vector3d));
-		int k = 0;
 		auto start = std::chrono::steady_clock::now();
 
 		std::for_each(std::execution::par, mVerticalIterator.begin(), mVerticalIterator.end(),
-		[this, &k, &camera, &scene, width, height](uint32_t y)
+		[this, &camera, &scene, width, height](uint32_t y)
 		{
-			for(size_t x = 0; x < width; x++)
+			std::for_each(std::execution::par, mHorizontalIterator.begin(), mHorizontalIterator.end(),
+			[=](uint32_t x)
 			{
 				int rayIndex = x + y * width;
 				int k = 3 * (x + ((height - 1) - y ) * width);
@@ -61,14 +61,14 @@ void Renderer::Render(const Camera* camera, const Scene* scene, uint32_t width, 
 				mImageData[k] = pixelColor.x * 255.0;
 				mImageData[k + 1] = pixelColor.y * 255.0;
 				mImageData[k + 2] = pixelColor.z * 255.0;
-				//k += 3;
-			}	
+			});	
 		});
 		mFrameIndex++;
 		auto end = std::chrono::steady_clock::now();
 		std::cout << "Samples: " << mFrameIndex;
 		std::cout << ", Elapsed(ms)= " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << std::endl;
 	}
+	PostProcess(width, height);
 }
 
 const uint8_t* Renderer::GetImageData() const 
@@ -86,12 +86,11 @@ const MathUtils::Vector3d& Renderer::PerPixel(const Camera* camera, const Scene*
 	Ray ray;
 	ray.Origin = camera->GetPosition();
 	ray.Direction = camera->GetRayDirections()[rayIndex];
-	
-	int rayBounces = 4;
+
+	int rayBounces = 5;
 	MathUtils::Vector3d color{0};
 	MathUtils::Vector3d contribution{1};
 	
-
 	uint32_t seed = rayIndex * mFrameIndex;
 	for (size_t i = 0; i < rayBounces; ++i)
 	{
@@ -99,13 +98,13 @@ const MathUtils::Vector3d& Renderer::PerPixel(const Camera* camera, const Scene*
 		HitInfo payload = TraceRay(ray, scene);
 		if (payload.Distance < 0)
 		{
-			color += scene->GetSkyColor() * contribution;
+			color += scene->GetSkyColor() ;//* contribution;
 			break;
 		}
-		const auto mat = scene->GetMaterials()[payload.MaterialIndex];
+		const Material& mat = scene->GetMaterials()[payload.MaterialIndex];
 		for(size_t i = 0; i < scene->GetNumberOfLightSources(); ++i)
 		{
-			LightSource light = scene->GetLightSources()[i];
+			const LightSource& light = scene->GetLightSources()[i];
 			Ray rayToLight;
 			rayToLight.Direction = light.Position - payload.HitPoint;
 			rayToLight.Origin = payload.HitPoint + rayToLight.Direction * POINT_OFFSET;
@@ -116,20 +115,20 @@ const MathUtils::Vector3d& Renderer::PerPixel(const Camera* camera, const Scene*
 			rayToLight.Direction.Normilize();
 			MathUtils::Vector3d V = payload.HitPoint * -1;
 			MathUtils::Vector3d R = MathUtils::Vector3d::Reflect(rayToLight.Direction * -1.0f, payload.Normal);
-			const double RdotV = MathUtils::Max(0, MathUtils::Vector3d::DotProduct(V, R));
 			const double NdotL = MathUtils::Max(0, MathUtils::Vector3d::DotProduct(rayToLight.Direction, payload.Normal));
-			float s = powf(RdotV, (int)mat.Specular);
+			//const double RdotV = MathUtils::Max(0, MathUtils::Vector3d::DotProduct(V, R));
+			//float s = powf(RdotV, (int)mat.Specular);
 
 			MathUtils::Vector3d diffuse = light.Color * NdotL * mat.Albedo;
 			//MathUtils::Vector3d specular = light.Color * s;
-			color += diffuse;//+ specular;
+			color += diffuse; //;+ specular;
 		}
 		//auto lightDirection =  payload.HitPoint - scene->GetLightSources()[0].Position;
 		//lightDirection.Normilize();
 		//const double dot = MathUtils::Max(0, 
 		//	MathUtils::Vector3d::DotProduct(payload.Normal, lightDirection * -1));
 		//color += mat.Albedo * dot;
-		color *= contribution;
+		//color *= contribution;
 
 		//color = payload.Normal * .5 + .5;
 		ray.Origin = payload.HitPoint + payload.Normal * POINT_OFFSET;
@@ -212,7 +211,7 @@ const bool Renderer::IsInShadow(const Ray& toLight, const HitInfo& hitInfo, cons
 		{
 			continue;
 		}
-		Sphere sphere  = scene->GetSpheres()[i];
+		const Sphere& sphere  = scene->GetSpheres()[i];
 		MathUtils::Vector3d origin = toLight.Origin - sphere.Position;
 		float a = MathUtils::Vector3d::DotProduct(toLight.Direction, toLight.Direction);
 		float b = 2 * MathUtils::Vector3d::DotProduct(toLight.Direction, origin);
@@ -231,5 +230,36 @@ const bool Renderer::IsInShadow(const Ray& toLight, const HitInfo& hitInfo, cons
 	}
 	return false;
 }
+
+void Renderer::PostProcess(uint32_t width, uint32_t height)
+{
+	for (size_t x = 1; x < width - 1; ++x)
+	{
+		for (size_t y = 1; y < height - 1; ++y)
+		{
+			MathUtils::Vector3d finalColor{0};
+			//Get the color of the pixel
+			for (int j = -1; j < 2; ++j)
+			{
+				for (int i = -1; i < 2; ++i)
+				{
+					uint32_t pixel = 3 * ((x + i) + (y + j) * width);
+					MathUtils::Vector3d color{(double)mImageData[pixel], (double)mImageData[pixel + 1],
+						(double)mImageData[pixel + 2]};
+					finalColor += color;
+				}
+			}
+			//Average the colors
+			finalColor *= 1.0f / 9.0f;
+			mImageData[3 * (x + y * width)] = finalColor.x;
+			mImageData[3 * (x + y * width) + 1] = finalColor.y;
+			mImageData[3 * (x + y * width) + 2] = finalColor.z;
+		}
+	}
+	
+
+	
+}
+
 
 }// namespace RaytracerApp

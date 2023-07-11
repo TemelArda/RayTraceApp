@@ -2,12 +2,9 @@
 #include <unordered_map>
 #include <string>
 
-namespace FileUtil
+namespace FileUtility
 {
 
 [[nodiscard]] const std::unordered_multimap<std::string, std::string> ParseFile(
     const std::string& fileName);
-
-
-
-}// namespace FileUtil
+}// namespace FileUtility

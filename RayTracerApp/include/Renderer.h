@@ -44,6 +44,7 @@ private:
 
 	const HitInfo& OnHit(const Ray& ray, const Scene* scene, const double HitDistance, const int ObjectIndex) const;
 
+	void PostProcess(uint32_t width, uint32_t height);
 };
 
 }  // namespace RaytracerApp
