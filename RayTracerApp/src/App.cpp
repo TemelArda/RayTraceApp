@@ -1,9 +1,5 @@
-//
-// RayTracer.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
 #pragma once
 #include "../include/App.h"
-#include "FileUtility.h"
 #include <iostream>
 #include <sstream>
 
@@ -39,12 +35,13 @@ void App::SetHeight(const uint32_t height)
 const bool App::SetUpScene(const SceneDefininition& scene) 
 {
 	if (!mScene)
-		mScene = std::make_unique<Scene>();
+		mScene = std::make_shared<Scene>();
    
 	if (!mCamera)
-      mCamera = std::make_unique<Camera>();
+      mCamera = std::make_shared<Camera>();
+	
 	if(!mRenderer)
-		mRenderer = std::make_unique<Renderer>();
+		mRenderer = std::make_shared<Renderer>();
 
 	auto it = scene.find("SAMPLES");
 	if (it != scene.end())
@@ -186,14 +183,14 @@ const bool App::SetUpScene(const SceneDefininition& scene)
 void App::InitilizeRenderer() 
 {
 	if (!mRenderer) 
-		mRenderer = std::make_unique<Renderer>();
+		mRenderer = std::make_shared<Renderer>();
 
 	mRenderer->SetImageSize(this->mWidth, this->mHeight);
 }
 
 const uint8_t* App::Draw() const
 {
-	mRenderer->Render(mCamera.get(), mScene.get(), mWidth, mHeight); 
+	mRenderer->Render(mCamera, mScene, mWidth, mHeight); 
 	return mRenderer->GetImageData();
 }
 

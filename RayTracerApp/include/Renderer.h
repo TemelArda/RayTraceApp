@@ -16,7 +16,7 @@ public:
 	
 	void SetImageSize(uint32_t width, uint32_t height);
 
-	void Render(const Camera* camera, const Scene* scene, uint32_t width, uint32_t height);
+	void Render(const std::weak_ptr<Camera> camera, const std::weak_ptr<Scene> scene, uint32_t width, uint32_t height);
 
 	[[nodiscard]] const uint8_t* GetImageData() const;
 

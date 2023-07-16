@@ -35,9 +35,18 @@ void Renderer::SetImageSize(uint32_t width, uint32_t height)
 	}
 }
 
-void Renderer::Render(const Camera* camera, const Scene* scene, uint32_t width, uint32_t height)
+void Renderer::Render(const std::weak_ptr<Camera> camera, const std::weak_ptr<Scene> scene, uint32_t width, uint32_t height)
 {
+	if (scene.expired() || camera.expired())
+	{
+		std::cout << "Scene or camera is expired" << std::endl;
+		return;
+	}
+	
+	auto scenePtr = scene.lock().get();
+	auto cameraPtr = camera.lock().get();
 	MathUtils::Vector3d pixelColor{0};
+	
 	while (mFrameIndex < mSamples)
 	{
 		if(mFrameIndex == 1)
@@ -45,14 +54,13 @@ void Renderer::Render(const Camera* camera, const Scene* scene, uint32_t width, 
 		auto start = std::chrono::steady_clock::now();
 
 		std::for_each(std::execution::par, mVerticalIterator.begin(), mVerticalIterator.end(),
-		[this, &camera, &scene, width, height](uint32_t y)
+		[=](uint32_t y)
 		{
-			std::for_each(std::execution::par, mHorizontalIterator.begin(), mHorizontalIterator.end(),
-			[=](uint32_t x)
+			for (size_t x = 0; x < width; ++x)
 			{
 				int rayIndex = x + y * width;
 				int k = 3 * (x + ((height - 1) - y ) * width);
-				auto color = this->PerPixel(camera, scene, rayIndex);
+				auto color = this->PerPixel(cameraPtr, scenePtr, rayIndex);
 				mAccumulationBuffer[rayIndex] += color;
 				auto pixelColor = mAccumulationBuffer[rayIndex] * (1.0 / (float)mFrameIndex);
 				pixelColor.x = MathUtils::Clamp(pixelColor.x, 0.0, 1.0);
@@ -61,7 +69,22 @@ void Renderer::Render(const Camera* camera, const Scene* scene, uint32_t width, 
 				mImageData[k] = pixelColor.x * 255.0;
 				mImageData[k + 1] = pixelColor.y * 255.0;
 				mImageData[k + 2] = pixelColor.z * 255.0;
-			});	
+			}
+			//std::for_each(std::execution::par, mHorizontalIterator.begin(), mHorizontalIterator.end(),
+			//[=](uint32_t x)
+			//{
+			//	int rayIndex = x + y * width;
+			//	int k = 3 * (x + ((height - 1) - y ) * width);
+			//	auto color = this->PerPixel(camera, scene, rayIndex);
+			//	mAccumulationBuffer[rayIndex] += color;
+			//	auto pixelColor = mAccumulationBuffer[rayIndex] * (1.0 / (float)mFrameIndex);
+			//	pixelColor.x = MathUtils::Clamp(pixelColor.x, 0.0, 1.0);
+			//	pixelColor.y = MathUtils::Clamp(pixelColor.y, 0.0, 1.0);
+			//	pixelColor.z = MathUtils::Clamp(pixelColor.z, 0.0, 1.0);
+			//	mImageData[k] = pixelColor.x * 255.0;
+			//	mImageData[k + 1] = pixelColor.y * 255.0;
+			//	mImageData[k + 2] = pixelColor.z * 255.0;
+			//});	
 		});
 		mFrameIndex++;
 		auto end = std::chrono::steady_clock::now();

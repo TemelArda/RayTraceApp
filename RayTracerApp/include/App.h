@@ -38,11 +38,11 @@ private :
 
    static App* instance; 
    
-   std::unique_ptr<Camera> mCamera;
+   std::shared_ptr<Camera> mCamera;
 
-	std::unique_ptr<Renderer> mRenderer;
+	std::shared_ptr<Renderer> mRenderer;
 
-	std::unique_ptr<Scene> mScene;
+	std::shared_ptr<Scene> mScene;
    
    uint32_t mWidth = 100;
    
